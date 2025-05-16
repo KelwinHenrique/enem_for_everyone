@@ -208,6 +208,7 @@ const ExamResult: React.FC<ExamResultProps> = () => {
                         option-review 
                         ${userAnswer === option.id ? 'selected' : ''} 
                         ${question.correctAnswer === option.id ? 'correct' : ''}
+                        ${question.correctAnswer !== option.id ? 'incorrect' : ''}
                       `}
                     >
                       <div className="option-marker">

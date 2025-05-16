@@ -308,6 +308,14 @@
   line-height: 1.5;
 }
 
+.option-review.correct .option-text {
+  color: #4CAF50;
+}
+
+.option-review.incorrect .option-text {
+  color: #F44336;
+}
+
 .explanation {
   background-color: #f9f9f9;
   padding: 1.5rem;
