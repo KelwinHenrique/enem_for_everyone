@@ -129,7 +129,13 @@ Responda no seguinte formato JSON:
                 raise ValueError("Could not find JSON array in response")
                 
             json_str = response_text[start_idx:end_idx]
-            questions_data = json.loads(json_str)
+            
+            # Clean up common JSON syntax issues (like trailing commas)
+            # This regex finds trailing commas in arrays or objects
+            import re
+            json_str_cleaned = re.sub(r',\s*([\]\}])', r'\1', json_str)
+            
+            questions_data = json.loads(json_str_cleaned)
             
             # Convert to Question objects
             questions = []

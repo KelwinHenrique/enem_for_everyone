@@ -11,6 +11,8 @@
 [![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
+<img src="./assets/login.png" alt="ENEM Para Todos - Plataforma de Preparação Inteligente" width="800">
+
 </div>
 
 ## 💡 Visão Geral
