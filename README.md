@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![ENEM Para Todos Logo](https://img.shields.io/badge/ENEM%20IA%2B-Democratizando%20o%20Acesso%20à%20Educação-blue?style=for-the-badge)
+![ENEM Para Todos Logo](https://img.shields.io/badge/ENEM%20Para%20Todos-Democratizando%20o%20Acesso%20à%20Educação-blue?style=for-the-badge)
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -28,7 +28,7 @@ O **ENEM Para Todos** é uma plataforma revolucionária desenvolvida durante a I
 ## 🔍 Funcionalidades Principais
 
 ### 📝 Simulados Personalizados
-- Geração de simulados completos no formato ENEM
+- Geração de simulados no formato ENEM
 - Personalização por área de conhecimento ou tópico específico
 - Diferentes níveis de dificuldade adaptados ao perfil do estudante
 - Temporizador para simular condições reais do exame
@@ -44,12 +44,6 @@ O **ENEM Para Todos** é uma plataforma revolucionária desenvolvida durante a I
 - Sistema de repetição espaçada para otimizar a memorização
 - Organização por temas e dificuldade
 - Acompanhamento de progresso de aprendizado
-
-### 📊 Análise de Desempenho
-- Estatísticas detalhadas por área de conhecimento
-- Identificação de pontos fortes e fracos
-- Recomendações personalizadas de estudo
-- Acompanhamento de evolução ao longo do tempo
 
 ### 🔎 Pesquisa Inteligente
 - Ferramenta de pesquisa avançada para tópicos do ENEM
@@ -79,14 +73,6 @@ O coração do ENEM Para Todos é o Google Gemini, um dos modelos de IA mais ava
 - **Explicações Detalhadas**: Análises aprofundadas de cada questão e resposta
 - **Conversação Natural**: Interface conversacional para tirar dúvidas
 - **Personalização de Conteúdo**: Adaptação do material ao perfil e necessidades do estudante
-
-## 🚀 Diferenciais Competitivos
-
-- **Foco na Democratização**: Tornamos acessível um ensino de qualidade que antes era privilégio de poucos
-- **Abordagem Pedagógica**: Desenvolvido com base em metodologias educacionais comprovadas
-- **Escalabilidade**: Arquitetura preparada para atender milhões de estudantes simultaneamente
-- **Feedback Contínuo**: Sistema que evolui constantemente com base nas interações dos usuários
-- **Acessibilidade**: Interface projetada para ser inclusiva e acessível a todos
 
 ## 🌱 Impacto Social
 
