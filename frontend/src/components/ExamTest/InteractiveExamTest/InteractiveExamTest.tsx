@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import examService, { Exam, Question, ChatMessage, setAuthToken } from '../../../services/examService';
+import React, { useState, useEffect } from 'react';
+import examService, { Exam, ChatMessage, setAuthToken } from '../../../services/examService';
 import { useAuth } from '../../../contexts/AuthContext';
 import '../ExamTest.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faUser, faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import QuestionChat from './QuestionChat';
 
 interface InteractiveExamTestProps {
   examId?: string;
@@ -18,13 +17,8 @@ const InteractiveExamTest: React.FC<InteractiveExamTestProps> = ({ examId, onCom
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<{ [key: string]: string }>({});
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const [chatId, setChatId] = useState<string | null>(null);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [userQuery, setUserQuery] = useState<string>('');
-  const [chatLoading, setChatLoading] = useState<boolean>(false);
   // Store chat history for each question
   const [questionChats, setQuestionChats] = useState<{[questionId: string]: {chatId: string, messages: ChatMessage[]}}>({}); 
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Set up auth token for all API requests
   useEffect(() => {
@@ -45,26 +39,7 @@ const InteractiveExamTest: React.FC<InteractiveExamTestProps> = ({ examId, onCom
     }
   }, [examId]);
 
-  // Scroll to bottom of chat when new messages are added
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [chatMessages]);
-  
-  // Load chat history for the current question if available
-  useEffect(() => {
-    if (exam && exam.questions && exam.questions.length > currentQuestionIndex) {
-      const currentQuestion = exam.questions[currentQuestionIndex];
-      if (currentQuestion && questionChats[currentQuestion.id]) {
-        setChatId(questionChats[currentQuestion.id].chatId);
-        setChatMessages(questionChats[currentQuestion.id].messages);
-      } else {
-        setChatId(null);
-        setChatMessages([]);
-      }
-    }
-  }, [currentQuestionIndex, exam, questionChats]);
+
 
   const getExam = async (id: string) => {
     setLoading(true);
@@ -169,133 +144,15 @@ const InteractiveExamTest: React.FC<InteractiveExamTestProps> = ({ examId, onCom
     }
   };
 
-  const startChat = async (initialQuery: string) => {
-    if (!exam || !exam.questions) return;
-    
-    const currentQuestion = exam.questions[currentQuestionIndex];
-    if (!currentQuestion) return;
-    
-    setChatLoading(true);
-    setError(null);
-    try {
-      const token = await getToken();
-      setAuthToken(token);
-      
-      const response = await examService.startQuestionChat(currentQuestion.id, initialQuery);
-      console.log('Chat started:', response);
-      
-      // Fix: Access the chat data directly from the response structure
-      if (response.success && response.chat) {
-        const newChatId = response.chat.id;
-        const newMessages = response.chat.messages;
-        
-        // Update current chat state
-        setChatId(newChatId);
-        setChatMessages(newMessages);
-        
-        // Store in question chats history
-        setQuestionChats(prev => ({
-          ...prev,
-          [currentQuestion.id]: {
-            chatId: newChatId,
-            messages: newMessages
-          }
-        }));
+  // Handle chat updates from the QuestionChat component
+  const handleChatUpdate = (questionId: string, chatId: string, messages: ChatMessage[]) => {
+    setQuestionChats(prev => ({
+      ...prev,
+      [questionId]: {
+        chatId,
+        messages
       }
-    } catch (err: any) {
-      console.error('Error starting chat:', err);
-      setError(err.message || 'Erro ao iniciar chat');
-    } finally {
-      setChatLoading(false);
-      setUserQuery('');
-    }
-  };
-
-  const continueChat = async () => {
-    if (!chatId || !userQuery.trim()) return;
-    
-    if (!exam || !exam.questions) return;
-    const currentQuestion = exam.questions[currentQuestionIndex];
-    if (!currentQuestion) return;
-    
-    setChatLoading(true);
-    setError(null);
-    try {
-      const token = await getToken();
-      setAuthToken(token);
-      
-      // Add user message to UI immediately for better UX
-      const updatedMessages = [...chatMessages, { content: userQuery, isUser: true }];
-      setChatMessages(updatedMessages);
-      
-      // Also update in our question chats history
-      setQuestionChats(prev => ({
-        ...prev,
-        [currentQuestion.id]: {
-          chatId: chatId,
-          messages: updatedMessages
-        }
-      }));
-      
-      const response = await examService.continueQuestionChat(chatId, userQuery);
-      console.log('Chat continued:', response);
-      
-      // Fix: Access the chat data directly from the response structure
-      if (response.success && response.chat) {
-        // Update with the full message list from the server
-        const newMessages = response.chat.messages;
-        setChatMessages(newMessages);
-        
-        // Update in question chats history
-        setQuestionChats(prev => ({
-          ...prev,
-          [currentQuestion.id]: {
-            chatId: chatId,
-            messages: newMessages
-          }
-        }));
-      }
-    } catch (err: any) {
-      console.error('Error continuing chat:', err);
-      setError(err.message || 'Erro ao continuar chat');
-      
-      // Remove the temporary user message if there was an error
-      const revertedMessages = chatMessages.filter((_, index) => index !== chatMessages.length - 1);
-      setChatMessages(revertedMessages);
-      
-      // Also revert in question chats history
-      setQuestionChats(prev => ({
-        ...prev,
-        [currentQuestion.id]: {
-          chatId: chatId,
-          messages: revertedMessages
-        }
-      }));
-    } finally {
-      setChatLoading(false);
-      setUserQuery('');
-    }
-  };
-
-  const handleChatSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!userQuery.trim()) return;
-    
-    if (!chatId) {
-      startChat(userQuery);
-    } else {
-      continueChat();
-    }
-  };
-
-  const handleSuggestedQuestion = (question: string) => {
-    setUserQuery(question);
-    if (!chatId) {
-      startChat(question);
-    } else {
-      // Set the query and wait for user to submit
-      // This gives users a chance to edit the suggested question
-    }
+    }));
   };
 
   if (loading && !exam) {
@@ -377,8 +234,6 @@ const InteractiveExamTest: React.FC<InteractiveExamTestProps> = ({ examId, onCom
                   if (currentQuestionIndex > 0) {
                     setCurrentQuestionIndex(prev => prev - 1);
                     setShowAnswer(false);
-                    setChatId(null);
-                    setChatMessages([]);
                   }
                 }}
                 disabled={currentQuestionIndex === 0}
@@ -400,72 +255,13 @@ const InteractiveExamTest: React.FC<InteractiveExamTestProps> = ({ examId, onCom
       </div>
 
       {showAnswer && (
-        <div className="chat-section">
-          <div className="chat-header">
-            <FontAwesomeIcon icon={faCommentDots} className="chat-icon" />
-            <h3>Tire suas dúvidas com o assistente</h3>
-          </div>
-          
-          {chatMessages.length > 0 ? (
-            <div className="chat-messages">
-              {chatMessages.map((msg, index) => (
-                <div key={index} className={`chat-message ${msg.isUser ? 'user' : 'assistant'}`}>
-                  <div className="message-avatar">
-                    {msg.isUser ? <FontAwesomeIcon icon={faUser} /> : <img src="/ai-assistant.svg" alt="AI" className="ai-avatar" />}
-                  </div>
-                  <div className="message-bubble">
-                    <div className="message-content">{msg.content}</div>
-                    {msg.timestamp && <div className="message-time">{new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>}
-                  </div>
-                </div>
-              ))}
-              <div ref={chatEndRef} />
-              {chatLoading && (
-                <div className="chat-loading">
-                  <div className="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="suggested-questions">
-              <p>Perguntas sugeridas:</p>
-              <div className="question-chips">
-                {currentQuestion.possibleQuestions?.map((question, index) => (
-                  <button 
-                    key={index} 
-                    className="question-chip"
-                    onClick={() => handleSuggestedQuestion(question)}
-                    disabled={chatLoading}
-                  >
-                    {question}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <form onSubmit={handleChatSubmit} className="chat-input">
-            <input
-              type="text"
-              value={userQuery}
-              onChange={(e) => setUserQuery(e.target.value)}
-              placeholder="Digite sua pergunta sobre esta questão..."
-              disabled={chatLoading}
-              className="chat-input-field"
-            />
-            <button 
-              type="submit" 
-              disabled={!userQuery.trim() || chatLoading}
-              className="chat-send-button"
-            >
-              {chatLoading ? 'Enviando...' : <FontAwesomeIcon icon={faPaperPlane} />}
-            </button>
-          </form>
-        </div>
+        <QuestionChat 
+          questionId={currentQuestion.id}
+          possibleQuestions={currentQuestion.possibleQuestions || []}
+          initialChatId={questionChats[currentQuestion.id]?.chatId || null}
+          initialMessages={questionChats[currentQuestion.id]?.messages || []}
+          onChatUpdate={(chatId, messages) => handleChatUpdate(currentQuestion.id, chatId, messages)}
+        />
       )}
 
 
