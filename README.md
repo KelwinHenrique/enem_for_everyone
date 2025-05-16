@@ -94,6 +94,43 @@ O ENEM Para Todos foi concebido com a missão de reduzir a desigualdade educacio
 
 O ENEM Para Todos foi desenvolvido por uma equipe apaixonada por educação e tecnologia durante a Imersão IA da Alura, combinando expertise em desenvolvimento de software, educação e inteligência artificial.
 
+## 📱 Interface da Aplicação
+
+Conheça a interface intuitiva e moderna do ENEM Para Todos:
+
+### Tela de Login
+<img src="./assets/login.png" alt="Tela de Login" width="700">
+
+### Página Inicial
+<img src="./assets/home.png" alt="Página Inicial" width="700">
+
+### Configuração de Simulado
+<img src="./assets/exam_settings.png" alt="Configuração de Simulado" width="700">
+
+### Questão do Simulado
+<img src="./assets/exam_question.png" alt="Questão do Simulado" width="700">
+
+### Resposta e Explicação
+<img src="./assets/question_answer.png" alt="Resposta e Explicação" width="700">
+
+### Lista de Pesquisas
+<img src="./assets/research_list.png" alt="Lista de Pesquisas" width="700">
+
+### Criar Nova Pesquisa
+<img src="./assets/research_create.png" alt="Criar Nova Pesquisa" width="700">
+
+### Detalhes da Pesquisa
+<img src="./assets/research_detail.png" alt="Detalhes da Pesquisa" width="700">
+
+### Flashcards de Estudo
+<img src="./assets/research_flashcards.png" alt="Flashcards de Estudo" width="700">
+
+### Frente do Flashcard
+<img src="./assets/flashcard_front.png" alt="Frente do Flashcard" width="700">
+
+### Verso do Flashcard
+<img src="./assets/flashcard_back.png" alt="Verso do Flashcard" width="700">
+
 ---
 
 <div align="center">
