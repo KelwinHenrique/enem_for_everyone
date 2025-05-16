@@ -1,0 +1,843 @@
+openapi: 3.0.0
+info:
+  title: Alura Project API
+  description: API para gerenciamento de simulados, questões e chats de estudo
+  version: 1.0.0
+  
+servers:
+  - url: /v1
+    description: Base API path
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  
+  schemas:
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: string
+            status:
+              type: integer
+    
+    Exam:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        userId:
+          type: string
+        examType:
+          type: string
+        questionCount:
+          type: integer
+        estimatedTime:
+          type: integer
+        contentSelection:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [pending, generating, ready, in-progress, completed, error]
+        createdAt:
+          type: string
+          format: date-time
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        questionIds:
+          type: array
+          items:
+            type: string
+    
+    Question:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              text:
+                type: string
+        correctAnswer:
+          type: string
+        explanation:
+          type: string
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        ratings:
+          type: object
+    
+    Chat:
+      type: object
+      properties:
+        id:
+          type: string
+        questionId:
+          type: string
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              isUser:
+                type: boolean
+              timestamp:
+                type: string
+                format: date-time
+
+security:
+  - BearerAuth: []
+
+paths:
+  /exams/create:
+    post:
+      summary: Criar um novo simulado
+      description: Cria um novo simulado com questões geradas pelo Gemini
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - examType
+                - questionCount
+                - estimatedTime
+                - contentSelection
+                - userId
+              properties:
+                examType:
+                  type: string
+                  description: Tipo de simulado
+                questionCount:
+                  type: integer
+                  description: Número de questões (entre 3 e 30)
+                  minimum: 3
+                  maximum: 30
+                estimatedTime:
+                  type: integer
+                  description: Tempo estimado em minutos
+                contentSelection:
+                  type: array
+                  description: Seleção de conteúdos para o simulado
+                  items:
+                    type: string
+                userId:
+                  type: string
+                  description: ID do usuário
+      responses:
+        '201':
+          description: Simulado criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Simulado criado com sucesso."
+                  data:
+                    type: object
+                    properties:
+                      exam:
+                        $ref: '#/components/schemas/Exam'
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /exams/{exam_id}:
+    get:
+      summary: Obter detalhes de um simulado
+      description: Obtém os detalhes de um simulado pelo ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: exam_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do simulado
+      responses:
+        '200':
+          description: Detalhes do simulado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      exam:
+                        $ref: '#/components/schemas/Exam'
+        '404':
+          description: Simulado não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /exams/{exam_id}/start:
+    post:
+      summary: Iniciar um simulado
+      description: Inicia um simulado e define seu status como em andamento
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: exam_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do simulado
+      responses:
+        '200':
+          description: Simulado iniciado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Simulado iniciado com sucesso."
+                  data:
+                    type: object
+                    properties:
+                      exam:
+                        $ref: '#/components/schemas/Exam'
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Simulado não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /exams/{exam_id}/submit:
+    post:
+      summary: Enviar respostas de um simulado
+      description: Envia respostas para um simulado e calcula os resultados
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: exam_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do simulado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - answers
+              properties:
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      questionId:
+                        type: string
+                      selectedOption:
+                        type: string
+      responses:
+        '200':
+          description: Simulado avaliado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Simulado avaliado com sucesso."
+                  data:
+                    type: object
+                    properties:
+                      result:
+                        type: object
+                        properties:
+                          score:
+                            type: number
+                            format: float
+                          totalQuestions:
+                            type: integer
+                          correctAnswers:
+                            type: integer
+                          incorrectAnswers:
+                            type: integer
+                          timeSpent:
+                            type: integer
+                          redirectUrl:
+                            type: string
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Simulado não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /exams/user/history:
+    get:
+      summary: Obter histórico de simulados
+      description: Obtém o histórico de simulados do usuário autenticado
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+          description: Número da página
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+          description: Limite de resultados por página
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, generating, ready, in-progress, completed, error]
+          description: Filtro por status do simulado
+      responses:
+        '200':
+          description: Histórico de simulados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      exams:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            title:
+                              type: string
+                            createdAt:
+                              type: string
+                              format: date-time
+                            status:
+                              type: string
+                            questionCount:
+                              type: integer
+                            score:
+                              type: number
+                              format: float
+                      pagination:
+                        type: object
+                        properties:
+                          page:
+                            type: integer
+                          limit:
+                            type: integer
+                          total:
+                            type: integer
+                          pages:
+                            type: integer
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /questions/{question_id}/rate:
+    post:
+      summary: Avaliar uma questão
+      description: Avalia uma questão com uma classificação de 1 a 5
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: question_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID da questão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - rating
+              properties:
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  description: Classificação (1-5)
+      responses:
+        '200':
+          description: Questão avaliada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Questão classificada com sucesso."
+                  data:
+                    type: object
+                    properties:
+                      question:
+                        $ref: '#/components/schemas/Question'
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Questão não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /questions/errors:
+    get:
+      summary: Obter questões com baixa classificação
+      description: Obtém questões com classificações abaixo de um limiar para revisão
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: threshold
+          in: query
+          schema:
+            type: number
+            format: float
+            default: 3.0
+          description: Limiar de classificação
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+          description: Limite de resultados
+      responses:
+        '200':
+          description: Questões com erros
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      errorQuestions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            question:
+                              $ref: '#/components/schemas/Question'
+                            averageRating:
+                              type: number
+                              format: float
+                      total:
+                        type: integer
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /questions/{question_id}/chat/start:
+    post:
+      summary: Iniciar um chat sobre uma questão
+      description: Inicia um chat sobre uma questão específica
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: question_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID da questão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: Pergunta inicial do usuário
+      responses:
+        '200':
+          description: Chat iniciado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      chat:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          question:
+                            $ref: '#/components/schemas/Question'
+                          messages:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                content:
+                                  type: string
+                                isUser:
+                                  type: boolean
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Questão não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /questions/chat/{chat_id}/continue:
+    post:
+      summary: Continuar um chat sobre uma questão
+      description: Continua um chat existente sobre uma questão
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: chat_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: Nova pergunta do usuário
+      responses:
+        '200':
+          description: Resposta do chat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      chat:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          question:
+                            $ref: '#/components/schemas/Question'
+                          messages:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                content:
+                                  type: string
+                                isUser:
+                                  type: boolean
+        '400':
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Acesso não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Chat não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /questions/chat/history:
+    get:
+      summary: Obter histórico de chats
+      description: Obtém o histórico de chats do usuário autenticado
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+          description: Limite de resultados
+      responses:
+        '200':
+          description: Histórico de chats
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      chats:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            questionId:
+                              type: string
+                            questionText:
+                              type: string
+                            updatedAt:
+                              type: string
+                              format: date-time
+                            messageCount:
+                              type: integer
+                      total:
+                        type: integer
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /questions/chat/{chat_id}:
+    get:
+      summary: Obter um chat específico
+      description: Obtém os detalhes de um chat específico
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: chat_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do chat
+      responses:
+        '200':
+          description: Detalhes do chat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      chat:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          question:
+                            $ref: '#/components/schemas/Question'
+                          messages:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                content:
+                                  type: string
+                                isUser:
+                                  type: boolean
+                          createdAt:
+                            type: string
+                            format: date-time
+                          updatedAt:
+                            type: string
+                            format: date-time
+        '403':
+          description: Acesso não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Chat não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

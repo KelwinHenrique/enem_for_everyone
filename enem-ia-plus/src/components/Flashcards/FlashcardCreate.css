@@ -1,0 +1,287 @@
+.flashcard-create-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.flashcard-create-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.flashcard-create-header h1 {
+  color: #6c5ce7;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.flashcard-create-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.flashcard-create-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Flashcard Preview */
+.flashcard-preview-container {
+  perspective: 1000px;
+  height: 350px;
+}
+
+.flashcard-preview-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.flashcard-preview-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-preview-front,
+.flashcard-preview-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.flashcard-preview-front {
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  color: white;
+}
+
+.flashcard-preview-back {
+  background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.flashcard-preview-front h3,
+.flashcard-preview-back h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.flashcard-preview-content {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding-right: 0.5rem;
+}
+
+.flashcard-preview-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flashcard-preview-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.flashcard-preview-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.flip-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+  align-self: center;
+}
+
+.flip-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Form Styles */
+.flashcard-form {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+}
+
+/* Media Attachments */
+.media-attachments {
+  margin-top: 0.5rem;
+}
+
+.no-attachments {
+  color: #999;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.attachment-list {
+  margin-bottom: 1rem;
+}
+
+.attachment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.remove-attachment {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.add-attachment-button {
+  background-color: transparent;
+  color: #6c5ce7;
+  border: 1px dashed #6c5ce7;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-attachment-button:hover {
+  background-color: rgba(108, 92, 231, 0.05);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #666;
+  border: 1px solid #e0e0e0;
+  border-radius: 30px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #f8f9fa;
+}
+
+.submit-button {
+  background-color: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #5649c0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(108, 92, 231, 0.3);
+}
+
+.submit-button:disabled {
+  background-color: #a29bfe;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .flashcard-create-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .flashcard-preview-container {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .flashcard-create-container {
+    padding: 1rem;
+  }
+  
+  .flashcard-create-header h1 {
+    font-size: 2rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+  }
+}
