@@ -140,8 +140,17 @@ const Dashboard: React.FC = () => {
               </svg>
             </div>
             <h3>Flashcards Inteligentes</h3>
+
             <p>Flashcards gerados automaticamente a partir das suas dificuldades, otimizando seu tempo de estudo.</p>
-            
+            {loading ? (
+              <div className="option-button disabled">Carregando...</div>
+            ) : flashcardStats && flashcardStats.dueToday > 0 ? (
+              <div className="option-button" onClick={handleStartFlashcardReview}>Praticar com Flashcards</div>
+            ) : (
+              <div className="no-flashcards-message">Nenhum flashcard para revisar hoje</div>
+            )}
+
+
             {loading ? (
               <div className="flashcard-stats-loading">Carregando estatísticas...</div>
             ) : flashcardStats ? (
@@ -167,13 +176,7 @@ const Dashboard: React.FC = () => {
               <div className="flashcard-stats-error">Não foi possível carregar as estatísticas</div>
             )}
             
-            {loading ? (
-              <div className="option-button disabled">Carregando...</div>
-            ) : flashcardStats && flashcardStats.dueToday > 0 ? (
-              <div className="option-button" onClick={handleStartFlashcardReview}>Praticar com Flashcards</div>
-            ) : (
-              <div className="no-flashcards-message">Nenhum flashcard para revisar hoje</div>
-            )}
+            
           </div>
         </div>
 
