@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useNotification } from '../../contexts/NotificationContext';
 import flashcardService, { Flashcard } from '../../services/flashcardService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBrain, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import './FlashcardReview.css';
 
 const FlashcardReview: React.FC = () => {
@@ -95,8 +97,12 @@ const FlashcardReview: React.FC = () => {
     return (
       <div className="flashcard-review-container">
         <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p>Carregando flashcards...</p>
+          <div className="loading-animation">
+            <FontAwesomeIcon icon={faBrain} className="loading-brain" />
+            <FontAwesomeIcon icon={faSpinner} className="loading-spinner-icon" spin />
+          </div>
+          <h2 className="loading-title">Preparando seus flashcards</h2>
+          <p className="loading-text">Organizando seu material de estudo personalizado...</p>
         </div>
       </div>
     );
