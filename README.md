@@ -74,12 +74,13 @@ Esses agentes trabalham em pipeline, onde a saída de um serve como entrada para
 - Organização por temas e dificuldade
 - Acompanhamento de progresso de aprendizado
 
-![Demo Gif](./assets/flashcards.gif)
+![Flashcards Gif](./assets/flashcards.gif)
 
 ### 🔎 Pesquisa Inteligente
 - Ferramenta de pesquisa avançada para tópicos do ENEM
 - Materiais de estudo gerados por IA
 - Resumos e explicações adaptados ao nível do estudante
+![Research Gif](./assets/research.gif)
 
 ## 🛠️ Tecnologias Utilizadas
 
