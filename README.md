@@ -112,6 +112,9 @@ Conheça a interface intuitiva e moderna do ENEM Para Todos:
 ### Questão do Simulado
 <img src="./assets/exam_question.png" alt="Questão do Simulado" width="700">
 
+### Resultado do Simulado
+<img src="./assets/exam_result.png" alt="Resultado do Simulado" width="700">
+
 ### Resposta e Explicação
 <img src="./assets/question_answer.png" alt="Resposta e Explicação" width="700">
 
