@@ -66,6 +66,7 @@ Esses agentes trabalham em pipeline, onde a saída de um serve como entrada para
 - Explicações detalhadas sobre cada resposta
 - Sugestões de tópicos relacionados para aprofundamento
 - Identificação de padrões de erros e recomendações personalizadas
+![Exam Gif](./assets/exam_interative.gif)
 
 ### 📚 Flashcards Inteligentes
 - Criação automática de flashcards a partir de questões
