@@ -58,6 +58,8 @@ Esses agentes trabalham em pipeline, onde a saída de um serve como entrada para
 - Diferentes níveis de dificuldade adaptados ao perfil do estudante
 - Temporizador para simular condições reais do exame
 
+![Exam Gif](./assets/exam.gif)
+
 
 ### 🤖 Assistente de Estudos com IA
 - Chat interativo para tirar dúvidas sobre questões específicas
