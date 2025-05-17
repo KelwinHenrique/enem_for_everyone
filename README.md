@@ -19,6 +19,8 @@
 
 O **ENEM Para Todos** é uma plataforma revolucionária desenvolvida durante a Imersão IA da Alura, projetada para democratizar o acesso à educação de qualidade e preparação para o ENEM. Utilizando o poder da Inteligência Artificial através do Google Gemini, nossa plataforma oferece uma experiência de estudo personalizada, adaptativa e acessível para todos os estudantes brasileiros.
 
+![Demo Gif](./assets/home.gif)
+
 ### 🤖 Implementação da IA: Chatbot e Agentes Gemini
 
 O projeto implementa dois conceitos-chave da tecnologia Gemini:
