@@ -11,7 +11,7 @@
 [![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Google Gemini](https://img.shields.io/badge/Google%20Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 
-<img src="./assets/login.png" alt="ENEM Para Todos - Plataforma de Preparação Inteligente" width="800">
+![Home Gif](./assets/home.gif)
 
 </div>
 
@@ -19,7 +19,7 @@
 
 O **ENEM Para Todos** é uma plataforma revolucionária desenvolvida durante a Imersão IA da Alura, projetada para democratizar o acesso à educação de qualidade e preparação para o ENEM. Utilizando o poder da Inteligência Artificial através do Google Gemini, nossa plataforma oferece uma experiência de estudo personalizada, adaptativa e acessível para todos os estudantes brasileiros.
 
-![Demo Gif](./assets/home.gif)
+
 
 ### 🤖 Implementação da IA: Chatbot e Agentes Gemini
 
