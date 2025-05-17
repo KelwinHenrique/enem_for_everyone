@@ -19,6 +19,27 @@
 
 O **ENEM Para Todos** é uma plataforma revolucionária desenvolvida durante a Imersão IA da Alura, projetada para democratizar o acesso à educação de qualidade e preparação para o ENEM. Utilizando o poder da Inteligência Artificial através do Google Gemini, nossa plataforma oferece uma experiência de estudo personalizada, adaptativa e acessível para todos os estudantes brasileiros.
 
+### 🤖 Implementação da IA: Chatbot e Agentes Gemini
+
+O projeto implementa dois conceitos-chave da tecnologia Gemini:
+
+#### 1. Chatbot Gemini
+Implementado no `gemini_service.py`, nosso chatbot permite conversas contextualizadas sobre questões do ENEM:
+
+- **Conversas Contextualizadas**: O sistema mantém o contexto das questões durante toda a interação
+- **Histórico de Conversas**: Capacidade de continuar conversas anteriores com todo o histórico preservado
+- **Formatação Rica**: Respostas formatadas em HTML para melhor experiência visual
+- **Personalização**: Prompts cuidadosamente elaborados para simular um tutor educacional especializado
+
+#### 2. Agentes Gemini
+Implementado no `research_service.py`, utilizamos o Google ADK (Agent Development Kit) para criar agentes especializados:
+
+- **Agente de Pesquisa**: Busca informações detalhadas sobre tópicos educacionais usando a ferramenta de pesquisa Google
+- **Agente de Criação de Conteúdo**: Transforma resultados de pesquisa em material educacional estruturado
+- **Agente de Flashcards**: Gera flashcards de estudo a partir do conteúdo educacional
+
+Esses agentes trabalham em pipeline, onde a saída de um serve como entrada para o próximo, criando um fluxo completo de pesquisa e geração de material de estudo personalizado.
+
 ### 🌟 Por que o ENEM Para Todos é revolucionário?
 
 - **Personalização Inteligente**: Simulados e questões geradas por IA adaptadas ao perfil de cada estudante
@@ -34,6 +55,8 @@ O **ENEM Para Todos** é uma plataforma revolucionária desenvolvida durante a I
 - Personalização por área de conhecimento ou tópico específico
 - Diferentes níveis de dificuldade adaptados ao perfil do estudante
 - Temporizador para simular condições reais do exame
+
+![Demo Gif](./assets/demo_exam.gif)
 
 ### 🤖 Assistente de Estudos com IA
 - Chat interativo para tirar dúvidas sobre questões específicas
