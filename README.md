@@ -121,6 +121,9 @@ Conheça a interface intuitiva e moderna do ENEM Para Todos:
 ### Criar Nova Pesquisa
 <img src="./assets/research_create.png" alt="Criar Nova Pesquisa" width="700">
 
+### Converse com o Lumos
+<img src="./assets/chat.png" alt="Converse com o Lumos" width="700">
+
 ### Detalhes da Pesquisa
 <img src="./assets/research_detail.png" alt="Detalhes da Pesquisa" width="700">
 

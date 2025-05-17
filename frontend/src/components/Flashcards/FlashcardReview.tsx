@@ -182,7 +182,7 @@ const FlashcardReview: React.FC = () => {
         
         {isRevealed && (
           <div className="rating-container">
-            <p className="rating-instruction">Quão bem você se lembrou deste flashcard?</p>
+            <p className="rating-instruction">Quão bem você se lembrou deste conteúdo?</p>
             <div className="rating-buttons">
               <button 
                 className="rating-button hard" 

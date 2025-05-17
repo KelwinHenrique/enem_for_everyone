@@ -149,7 +149,7 @@ const QuestionChat: React.FC<QuestionChatProps> = ({
     <div className="chat-section">
       <div className="chat-header">
         <FontAwesomeIcon icon={faCommentDots} className="chat-icon" />
-        <h3>Tire suas dúvidas com o assistente</h3>
+        <h3>Tire suas dúvidas com o Lumos, nosso tutor virtual</h3>
       </div>
       
       {chatMessages.length > 0 ? (

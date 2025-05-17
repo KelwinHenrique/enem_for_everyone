@@ -12,7 +12,7 @@ const Login: React.FC = () => {
           <h1 className="logo-text">Enem Para Todos</h1>
         </div>
         <div className="login-heading">
-          <h2>Prepare-se para o ENEM de forma <span className="highlight">inteligente e personalizada</span> com a ajuda da nossa IA!</h2>
+          <h2>Prepare-se para o ENEM de forma <span className="highlight">inteligente e personalizada</span> com a ajuda do <span className="highlight">Lumos</span>, nosso tutor virtual!</h2>
           <p>O Enem Para Todos utiliza inteligência artificial avançada para criar uma experiência de estudo adaptativa, focada nas suas necessidades específicas.</p>
         </div>
         <div className="login-content">

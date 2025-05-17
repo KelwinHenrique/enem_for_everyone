@@ -55,27 +55,27 @@ const ResearchList: React.FC = () => {
   return (
     <div className="research-list-container">
       <div className="research-list-header">
-        <h1>Conteúdos Gerados</h1>
+        <h1>Meus Materiais</h1>
         <button className="research-create-button" onClick={handleCreateResearch}>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          Gerar Novo Conteúdo
+          Gerar Novo Material
         </button>
       </div>
 
       {loading ? (
         <div className="research-loading">
           <div className="research-loading-spinner"></div>
-          <p>Carregando conteúdos...</p>
+          <p>Carregando materiais...</p>
         </div>
       ) : researchList.length === 0 ? (
         <div className="research-empty-state">
-          <h3>Nenhum conteúdo encontrado</h3>
-          <p>Você ainda não gerou nenhum conteúdo. Clique no botão acima para criar seu primeiro material de estudo!</p>
+          <h3>Nenhum material encontrado</h3>
+          <p>Você ainda não gerou nenhum material. Clique no botão acima para criar seu primeiro material!</p>
           <button className="research-create-button" onClick={handleCreateResearch}>
-            Gerar Primeiro Conteúdo
+            Gerar Primeiro Material
           </button>
         </div>
       ) : (
@@ -103,7 +103,7 @@ const ResearchList: React.FC = () => {
                     <polyline points="15 3 21 3 21 9"></polyline>
                     <line x1="10" y1="14" x2="21" y2="3"></line>
                   </svg>
-                  Ver conteúdo
+                  Ver Material
                 </button>
               </div>
             </div>

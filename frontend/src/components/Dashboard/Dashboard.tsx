@@ -126,8 +126,8 @@ const Dashboard: React.FC = () => {
                 <path d="M7 17l2 2 6-6" />
               </svg>
             </div>
-            <h3>Materiais de Estudo</h3>
-            <p>Gere ou acesse materiais de estudo personalizados sobre qualquer tópico com nosso Agente de IA.</p>
+            <h3>Meus materiais</h3>
+            <p>Gere ou acesse materiais de estudo personalizados gerados com o Lumos, nosso tutor virtual.</p>
             <div className="option-button">Acessar/ Gerar Conteúdo</div>
           </div>
           
