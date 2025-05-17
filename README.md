@@ -56,7 +56,6 @@ Esses agentes trabalham em pipeline, onde a saída de um serve como entrada para
 - Diferentes níveis de dificuldade adaptados ao perfil do estudante
 - Temporizador para simular condições reais do exame
 
-![Demo Gif](./assets/demo_exam.gif)
 
 ### 🤖 Assistente de Estudos com IA
 - Chat interativo para tirar dúvidas sobre questões específicas
@@ -69,6 +68,8 @@ Esses agentes trabalham em pipeline, onde a saída de um serve como entrada para
 - Sistema de repetição espaçada para otimizar a memorização
 - Organização por temas e dificuldade
 - Acompanhamento de progresso de aprendizado
+
+![Demo Gif](./assets/demo_flashcard.gif)
 
 ### 🔎 Pesquisa Inteligente
 - Ferramenta de pesquisa avançada para tópicos do ENEM
